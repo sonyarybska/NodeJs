@@ -1,17 +1,18 @@
 const fs = require('fs');
 const path = require('path');
+
 const boys = path.join(__dirname, 'users', 'boys');
 const girls = path.join(__dirname, 'users', 'girls');
 
 ////////////////////////////////////////1 спосіб///////////////////////////////////////////
 
 
-const genderSort = (linkToCurrentDir) => {
-
+const genderSort = (linkToCurrentDir,gender,moveTo) => {
     fs.readdir(linkToCurrentDir, (err, data) => {
 
         if (err) {
             console.log(err);
+            return;
         }
 
         data.forEach(value => {
@@ -22,18 +23,11 @@ const genderSort = (linkToCurrentDir) => {
                     return;
                 }
 
-                let users = JSON.parse(data.toString());
+                const users = JSON.parse(data.toString());
 
-                if (users.gender === 'female') {
+                if (users.gender === gender) {
 
-                    fs.rename(path.join(linkToCurrentDir, value), path.join(girls, value), () => {
-
-                        if (err) {
-                            console.log(err);
-                        }
-                    });
-                } else {
-                    fs.rename(path.join(linkToCurrentDir, value), path.join(boys, value), () => {
+                    fs.rename(path.join(linkToCurrentDir, value), path.join(moveTo, value), () => {
 
                         if (err) {
                             console.log(err);
@@ -45,6 +39,6 @@ const genderSort = (linkToCurrentDir) => {
     });
 };
 
-genderSort(girls);
-genderSort(boys);
+genderSort(girls,'male',boys);
+genderSort(boys,'female',girls);
 

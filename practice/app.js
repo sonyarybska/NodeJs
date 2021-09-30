@@ -1,3 +1,11 @@
+const fs = require('fs');
+const path = require('path');
+
+const manOlder20 = path.join(__dirname, 'manOlder20');
+const manYounger20 = path.join(__dirname, 'manYounger20');
+const womanYounger20 = path.join(__dirname, 'womanYounger20');
+const womanOlder20 = path.join(__dirname, 'womanOlder20');
+
 const users = [
     {name: "Maks", gender: "male", age: 21},
     {name: "Anna", gender: "female", age: 17},
@@ -10,54 +18,70 @@ const users = [
     {name: "Sofia", gender: "female", age: 24},
     {name: "Julia", gender: "female", age: 16}
 ];
-
-const fs = require('fs');
-const path = require('path');
-const manOlder20 = path.join(__dirname, 'manOlder20');
-const manYounger20 = path.join(__dirname, 'manYounger20');
-const womanYounger20 = path.join(__dirname, 'womanYounger20');
-const womanOlder20 = path.join(__dirname, 'womanOlder20');
-
 users.forEach(user => {
 
     if (user.gender === 'male' && user.age > 20) {
+        fs.mkdir(manOlder20,(err)=>{
+
+            if (err) {
+                return err;
+            }
+        });
+
         fs.writeFile(path.join(manOlder20, `${user.name.toString()}.txt`), JSON.stringify(user), (err) => {
 
             if (err) {
-                console.log(err);
+               return err;
             }
 
-        })
-        return '';
+        });
     }
 
     if (user.gender === 'male' && user.age < 20) {
+        fs.mkdir(manYounger20,(err)=>{
+
+            if (err) {
+               return err;
+            }
+        });
+
         fs.writeFile(path.join(manYounger20, `${user.name.toString()}.txt`), JSON.stringify(user), (err) => {
 
             if (err) {
-                console.log(err);
+                return err;
             }
 
-        })
-        return '';
+        });
     }
 
     if (user.gender === 'female' && user.age > 20) {
+        fs.mkdir(womanOlder20,(err)=>{
+
+            if (err) {
+                return err;
+            }
+        });
+
         fs.writeFile(path.join(womanOlder20, `${user.name.toString()}.txt`), JSON.stringify(user), (err) => {
 
             if (err) {
-                console.log(err);
+                return err;
             }
 
         })
-        return '';
     }
 
     if (user.gender === 'female' && user.age < 20) {
+        fs.mkdir(womanYounger20,(err)=>{
+
+            if (err) {
+                return err;
+            }
+        })
         fs.writeFile(path.join(womanYounger20, `${user.name.toString()}.txt`), JSON.stringify(user), (err) => {
 
             if (err) {
-                console.log(err);
+                return err;
             }
 
         })
