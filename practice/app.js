@@ -9,7 +9,7 @@ const users = [
     {name: "Igor", gender: "male", age: 15},
     {name: "Sofia", gender: "female", age: 24},
     {name: "Julia", gender: "female", age: 16}
-]
+];
 
 const fs = require('fs');
 const path = require('path');
@@ -61,7 +61,6 @@ users.forEach(user => {
             }
 
         })
-        return '';
     }
 
 });
