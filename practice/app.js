@@ -18,6 +18,7 @@ const users = [
     {name: "Sofia", gender: "female", age: 24},
     {name: "Julia", gender: "female", age: 16}
 ];
+
 users.forEach(user => {
 
     if (user.gender === 'male' && user.age > 20) {
