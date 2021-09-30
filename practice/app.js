@@ -19,16 +19,43 @@ const users = [
     {name: "Julia", gender: "female", age: 16}
 ];
 
+fs.mkdir(womanYounger20,(err)=>{
+
+    if (err) {
+        console.log(err);
+        return err;
+    }
+});
+
+fs.mkdir(manOlder20,(err)=>{
+
+    if (err) {
+        console.log(err)
+        return err;
+    }
+});
+
+fs.mkdir(manYounger20,(err)=>{
+
+    if (err) {
+        console.log(err)
+        return err;
+    }
+
+});
+
+fs.mkdir(womanOlder20,(err)=>{
+
+    if (err) {
+        console.log(err)
+        return err;
+    }
+
+});
+
 users.forEach(user => {
 
     if (user.gender === 'male' && user.age > 20) {
-        fs.mkdir(manOlder20,(err)=>{
-
-            if (err) {
-                console.log(err)
-                return err;
-            }
-        });
 
         fs.writeFile(path.join(manOlder20, `${user.name.toString()}.txt`), JSON.stringify(user), (err) => {
 
@@ -41,14 +68,6 @@ users.forEach(user => {
     }
 
     if (user.gender === 'male' && user.age < 20) {
-        fs.mkdir(manYounger20,(err)=>{
-
-            if (err) {
-                console.log(err)
-                return err;
-            }
-
-        });
 
         fs.writeFile(path.join(manYounger20, `${user.name.toString()}.txt`), JSON.stringify(user), (err) => {
 
@@ -61,14 +80,6 @@ users.forEach(user => {
     }
 
     if (user.gender === 'female' && user.age > 20) {
-        fs.mkdir(womanOlder20,(err)=>{
-
-            if (err) {
-                console.log(err)
-                return err;
-            }
-
-        });
 
         fs.writeFile(path.join(womanOlder20, `${user.name.toString()}.txt`), JSON.stringify(user), (err) => {
 
@@ -81,13 +92,6 @@ users.forEach(user => {
     }
 
     if (user.gender === 'female' && user.age < 20) {
-        fs.mkdir(womanYounger20,(err)=>{
-
-            if (err) {
-                console.log(err);
-                return err;
-            }
-        });
 
         fs.writeFile(path.join(womanYounger20, `${user.name.toString()}.txt`), JSON.stringify(user), (err) => {
 
