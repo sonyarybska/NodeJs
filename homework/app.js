@@ -9,7 +9,6 @@ const girls = path.join(__dirname, 'users', 'girls');
 
 const genderSort = (linkToCurrentDir,gender,moveTo) => {
     fs.readdir(linkToCurrentDir, (err, data) => {
-
         if (err) {
             console.log(err);
             return;
@@ -17,7 +16,6 @@ const genderSort = (linkToCurrentDir,gender,moveTo) => {
 
         data.forEach(value => {
             fs.readFile(path.join(linkToCurrentDir, value), (err, data) => {
-
                 if (err) {
                     console.log(err);
                     return;
@@ -28,7 +26,6 @@ const genderSort = (linkToCurrentDir,gender,moveTo) => {
                 if (users.gender === gender) {
 
                     fs.rename(path.join(linkToCurrentDir, value), path.join(moveTo, value), () => {
-
                         if (err) {
                             console.log(err);
                         }
