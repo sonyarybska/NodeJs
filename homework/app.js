@@ -1,65 +1,53 @@
 const fs = require('fs');
-const path = require('path')
-const boys = path.join(__dirname,'users', 'boys');
-const girls = path.join(__dirname,'users', 'girls');
+const path = require('path');
+const boys = path.join(__dirname, 'users', 'boys');
+const girls = path.join(__dirname, 'users', 'girls');
 
 ////////////////////////////////////////1 спосіб///////////////////////////////////////////
 
-fs.readdir(boys, (err, data) => {
 
-    if (err) {
-        console.log(err);
-    }
+const genderSort = (linkToCurrentDir) => {
 
-    data.forEach(value => {
-        fs.readFile(path.join(boys, value), (err, data) => {
+    fs.readdir(linkToCurrentDir, (err, data) => {
 
-            if (err) {
-                console.log(err);
-                return;
-            }
+        if (err) {
+            console.log(err);
+        }
 
-            let users = JSON.parse(data.toString());
+        data.forEach(value => {
+            fs.readFile(path.join(linkToCurrentDir, value), (err, data) => {
 
-            users.gender === 'female' ? fs.rename(path.join(boys, value), path.join(girls, value), () => {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
 
-                    if (err) {
-                        console.log(err);
-                    }
-                }) :
-                null;
+                let users = JSON.parse(data.toString());
+
+                if (users.gender === 'female') {
+
+                    fs.rename(path.join(linkToCurrentDir, value), path.join(girls, value), () => {
+
+                        if (err) {
+                            console.log(err);
+                        }
+                    });
+                } else {
+                    fs.rename(path.join(linkToCurrentDir, value), path.join(boys, value), () => {
+
+                        if (err) {
+                            console.log(err);
+                        }
+                    });
+                }
+            });
         });
     });
-});
+};
 
-fs.readdir(girls, (err, data) => {
+genderSort(girls);
+genderSort(boys);
 
-    if (err) {
-        console.log(err);
-        return;
-    }
-
-
-    data.forEach(value => {
-        fs.readFile(path.join(girls, value), (err, data) => {
-
-            if (err) {
-                console.log(err);
-            }
-
-            let users = JSON.parse(data.toString());
-
-            users.gender === 'male' ?
-                fs.rename(path.join(girls, value), path.join(boys, value), (err) => {
-
-                    if (err) {
-                        console.log(err);
-                    }
-                }) :
-                null;
-        });
-    });
-});
 
 /////////////////////////////////2 спосіб////////////////////////////////
 // let usersFile = path.join(__dirname, 'users');
