@@ -4,10 +4,12 @@ const path = require('path');
 const boys = path.join(__dirname, 'users', 'boys');
 const girls = path.join(__dirname, 'users', 'girls');
 
+
+
 ////////////////////////////////////////1 спосіб///////////////////////////////////////////
 
 
-const genderSort = (linkToCurrentDir,gender,moveTo) => {
+const genderSort = (linkToCurrentDir, gender, moveTo) => {
     fs.readdir(linkToCurrentDir, (err, data) => {
         if (err) {
             console.log(err);
@@ -36,6 +38,9 @@ const genderSort = (linkToCurrentDir,gender,moveTo) => {
     });
 };
 
-genderSort(girls,'male',boys);
-genderSort(boys,'female',girls);
+
+
+
+genderSort(girls, 'male', boys);
+genderSort(boys, 'female', girls);
 
