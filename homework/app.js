@@ -5,6 +5,7 @@ const app=express();
 
 app.use(express.json());
 app.use(express.urlencoded());
+
 app.use('/users',userRouter);
 
 app.listen(5000,()=>{
