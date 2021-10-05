@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{user.username}}</title>
+    <style type="text/css">
+        body{
+            background-color: lightblue;
+        }
+        .user-info {
+            height: 200px;
+            width: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+        .options{
+            display: flex;
+            justify-content: space-evenly;
+        }
+
+    </style>
+</head>
+<body>
+<div class="user-info">
+    <div>
+        <div>
+            <p><strong>Username</strong>: {{user.username}}</p>
+        </div>
+        <div>
+            <p><strong>Password</strong>: {{user.password}}</p>
+        </div>
+    </div>
+    <div class="options">
+        <a href="/users" >
+            <button>All Users</button>
+        </a>
+        <a href="/">Log out</a>
+    </div>
+</div>
+</body>
+</html>
