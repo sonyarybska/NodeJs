@@ -8,7 +8,13 @@ const readFile = async () => {
     return JSON.parse(data.toString());
 };
 
-const writeFile = (data) => fs.writeFile(dbLink, data);
+const writeFile = async (data) => {
+    const string = JSON.stringify(data);
+
+    const dataFile = await fs.writeFile(dbLink, string);
+
+    return dataFile;
+};
 
 module.exports = {
     getUsers: async (req, res) => {
@@ -25,20 +31,24 @@ module.exports = {
     postUser: async (req, res) => {
         const users = await readFile();
 
-        users.push({...req.body, id: users.length + 1});
+        users.sort((a, b) => {
+            return a.id - b.id;
+        });
 
-        await writeFile(JSON.stringify(users));
+        const last = users[users.length - 1].id;
+
+        users.push({...req.body, id: last + 1});
+
+        await writeFile(users);
 
         res.end();
     },
 
     deleteUser: async (req, res) => {
         const users = await readFile();
+        const newUsers = users.filter(value => +req.params.id !== value.id);
 
-        users.splice(+req.params.id - 1, 1);
-        users.map((value, index) => value.id = index + 1);
-
-        await writeFile(JSON.stringify(users));
+        await writeFile(newUsers);
 
         res.end();
     }
