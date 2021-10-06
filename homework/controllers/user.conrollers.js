@@ -12,7 +12,7 @@ module.exports = {
     getUser: async (req, res) => {
         const users = await readFile();
 
-        const newUsers = users.filter(value => +req.params.id === value.id);
+        const newUsers = users.find(value => +req.params.id === value.id);
 
         if(newUsers.name){
             return res.json(newUsers);
