@@ -4,7 +4,8 @@ const fs = require('fs/promises');
 const dbLink = path.join(process.cwd(), 'users.json');
 
 const readFile = async () => {
-    let data = await fs.readFile(dbLink);
+    const data = await fs.readFile(dbLink);
+
     return JSON.parse(data.toString());
 };
 
@@ -13,6 +14,7 @@ const writeFile = (data) => fs.writeFile(dbLink, data);
 module.exports = {
     getUsers: async (req, res) => {
         const users = await readFile();
+
         res.json(users);
     },
 
@@ -27,7 +29,7 @@ module.exports = {
 
         users.push({...req.body, id: users.length + 1});
 
-        await writeFile(JSON.stringify(users));
+        await writeFile(JSON.stringify(users));           // TODO винеси JSON.stringify() у функцію writeFile
 
         res.end();
     },
