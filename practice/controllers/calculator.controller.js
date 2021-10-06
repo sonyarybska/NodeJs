@@ -5,16 +5,16 @@ module.exports = {
 
         switch (operator) {
             case '+':
-                summa = +num1 + +num2;
+                summa = num1 + num2;
                 break;
             case '-':
-                summa = +num1 - +num2;
+                summa = num1 - num2;
                 break;
             case ':':
-                summa = +num1 / +num2;
+                summa = num1 / num2;
                 break;
             case '*':
-                summa = +num1 * +num2;
+                summa = num1 * num2;
                 break;
         }
 
