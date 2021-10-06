@@ -1,21 +1,6 @@
-const path = require('path');
-const fs = require('fs/promises');
+const services=require('../services/user.service');
 
-const dbLink = path.join(process.cwd(), 'users.json');
-
-const readFile = async () => {
-    let data = await fs.readFile(dbLink);
-
-    return JSON.parse(data.toString());
-};
-
-const writeFile = async (data) => {
-    const string = JSON.stringify(data);
-
-    const dataFile = await fs.writeFile(dbLink, string);
-
-    return dataFile;
-};
+const {readFile,writeFile}=services;
 
 module.exports = {
     getUsers: async (req, res) => {
@@ -27,7 +12,13 @@ module.exports = {
     getUser: async (req, res) => {
         const users = await readFile();
 
-        res.json(users[req.params.id - 1]);
+        const newUsers = users.filter(value => +req.params.id === value.id);
+
+        if(newUsers.name){
+            return res.json(newUsers);
+        }
+
+       return  res.json('There is no such user');
     },
 
     postUser: async (req, res) => {
