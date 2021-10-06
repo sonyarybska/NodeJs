@@ -5,6 +5,7 @@ const dbLink = path.join(process.cwd(), 'users.json');
 
 const readFile = async () => {
     let data = await fs.readFile(dbLink);
+
     return JSON.parse(data.toString());
 };
 
@@ -19,6 +20,7 @@ const writeFile = async (data) => {
 module.exports = {
     getUsers: async (req, res) => {
         const users = await readFile();
+
         res.json(users);
     },
 
@@ -46,6 +48,7 @@ module.exports = {
 
     deleteUser: async (req, res) => {
         const users = await readFile();
+
         const newUsers = users.filter(value => +req.params.id !== value.id);
 
         await writeFile(newUsers);
