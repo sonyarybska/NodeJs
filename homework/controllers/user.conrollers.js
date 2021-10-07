@@ -30,5 +30,10 @@ module.exports = {
         await User.deleteOne({userId: +req.params.id});
         
         res.end();
+    },
+    authUsers: async (req, res) => {
+        const users = await User.findOne({email:req.body.email});
+
+        res.json(`Welcome ${users.email}`);
     }
 };
