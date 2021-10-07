@@ -1,5 +1,7 @@
-const db = require('../dataBase/User');
 const {Types} = require("mongoose");
+
+const db = require('../dataBase/User');
+
 
 module.exports = {
     createUserMiddleware: async (req, res, next) => {
