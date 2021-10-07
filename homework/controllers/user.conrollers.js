@@ -23,6 +23,7 @@ module.exports = {
         } else {
             await User.create({...req.body, userId: 1});
         }
+
         res.end();
     },
 
