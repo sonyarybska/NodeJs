@@ -5,7 +5,7 @@ module.exports = {
         try {
             const user = await db.find({email: req.body.email});
 
-            if (user.email) {
+            if (user) {
                 throw new Error('Email already exist');
             }
 
