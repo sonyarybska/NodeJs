@@ -24,7 +24,7 @@ module.exports = {
             await db.create({...req.body, carId: 1});
         }
 
-        res.end();
+        res.end('Car is added');
     },
 
     deleteCar: async (req, res) => {

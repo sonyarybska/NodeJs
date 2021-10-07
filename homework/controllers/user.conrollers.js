@@ -24,13 +24,13 @@ module.exports = {
             await User.create({...req.body, userId: 1});
         }
 
-        res.end();
+        res.end('Car is added');
     },
 
     deleteUser: async (req, res) => {
         await User.deleteOne({userId: +req.params.id});
         
-        res.end();
+        res.end('Car is deleted');
     },
     authUsers: async (req, res) => {
         const users = await User.findOne({email:req.body.email});
