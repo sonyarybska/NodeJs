@@ -27,9 +27,15 @@ module.exports = {
         res.end();
     },
 
-    deleteCar:async (req, res) => {
+    deleteCar: async (req, res) => {
         await db.deleteOne({carId: +req.params.id});
 
         res.end('Car deleted');
+    },
+
+    updateCar: async (req, res) => {
+        await db.updateOne({carId: +req.params.id}, {$set: req.body});
+
+        res.end('Car updated');
     }
 };
