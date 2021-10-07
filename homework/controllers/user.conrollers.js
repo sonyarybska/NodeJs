@@ -2,39 +2,53 @@ const User = require('../dataBase/User');
 
 module.exports = {
     getUsers: async (req, res) => {
-        const users = await User.find({});
+        try {
+            const users = await User.find({});
 
-        res.json(users);
+            res.json(users);
+        } catch (e) {
+            res.json(e.message);
+        }
     },
 
     getUser: async (req, res) => {
-        const user = await User.findOne({userId: +req.params.id});
+        try {
+            const {id} = req.params;
+            const user = await User.findById(id);
 
-        return res.json(user);
+            res.json(user);
+        } catch (e) {
+            res.json(e.message);
+        }
     },
 
     postUser: async (req, res) => {
-        const users = await User.find({});
+        try {
+            await User.create(req.body);
 
-        const id = users.find(value => value.userId);
-
-        if (id) {
-            await User.create({...req.body, userId: users[users.length - 1].userId + 1});
-        } else {
-            await User.create({...req.body, userId: 1});
+            res.end('User is added');
+        } catch (e) {
+            res.json(e.message);
         }
-
-        res.end('Car is added');
     },
 
     deleteUser: async (req, res) => {
-        await User.deleteOne({userId: +req.params.id});
-        
-        res.end('Car is deleted');
-    },
-    authUsers: async (req, res) => {
-        const users = await User.findOne({email:req.body.email});
+        try {
+            const {id} = req.params;
 
-        res.json(`Welcome ${users.email}`);
+            await User.deleteOne({_id: id});
+
+            res.end('User is deleted');
+        } catch (e) {
+            res.json(e.message);
+        }
+    },
+
+    authUsers: (req, res) => {
+        try {
+            res.json(`Welcome ${req.body.email}`);
+        } catch (e) {
+            res.json(e.message);
+        }
     }
 };
