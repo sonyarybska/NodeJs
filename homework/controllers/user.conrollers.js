@@ -1,37 +1,34 @@
-const User=require('../dataBase/User');
+const User = require('../dataBase/User');
 
 module.exports = {
     getUsers: async (req, res) => {
-        const users = await readFile();
+        const users = await User.find({});
 
         res.json(users);
     },
 
     getUser: async (req, res) => {
-        const users = await readFile();
+        const user = await User.findOne({userId: +req.params.id});
 
-        const newUsers = users.find(value => +req.params.id === value.id);
-
-        if(newUsers.name){
-            return res.json(newUsers);
-        }
-
-       return  res.json('There is no such user');
+        return res.json(user);
     },
 
     postUser: async (req, res) => {
-        await User.create(req.body);
+        const users = await User.find({});
 
+        const id = users.find(value => value.userId);
+
+        if (id) {
+            await User.create({...req.body, userId: users[users.length - 1].userId + 1});
+        } else {
+            await User.create({...req.body, userId: 1});
+        }
         res.end();
     },
 
     deleteUser: async (req, res) => {
-        const users = await readFile();
-
-        const newUsers = users.filter(value => +req.params.id !== value.id);
-
-        await writeFile(newUsers);
-
+        await User.deleteOne({userId: +req.params.id});
+        
         res.end();
     }
 };
