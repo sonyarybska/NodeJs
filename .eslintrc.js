@@ -7,6 +7,11 @@ module.exports = {
     parserOptions: {
         ecmaVersion: 12,
     },
+    semi:[
+        'error',
+        'always',
+        {omitLastOneLineBlock:true}
+    ],
     rules: {
         'array-bracket-newline': [
             'error',
@@ -144,6 +149,6 @@ module.exports = {
         ],
         'use-isnan': 'error',
         'wrap-iife': 'error',
-        yoda: 'error'
+        yoda: 'error',
     },
 };

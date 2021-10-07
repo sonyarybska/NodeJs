@@ -1,6 +1,4 @@
-const services=require('../services/user.service');
-
-const {readFile,writeFile}=services;
+const User=require('../dataBase/User');
 
 module.exports = {
     getUsers: async (req, res) => {
@@ -22,17 +20,7 @@ module.exports = {
     },
 
     postUser: async (req, res) => {
-        const users = await readFile();
-
-        users.sort((a, b) => {
-            return a.id - b.id;
-        });
-
-        const last = users[users.length - 1].id;
-
-        users.push({...req.body, id: last + 1});
-
-        await writeFile(users);
+        await User.create(req.body);
 
         res.end();
     },
