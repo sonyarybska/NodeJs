@@ -2,32 +2,57 @@ const db = require('../dataBase/Car');
 
 module.exports = {
     getCars: async (req, res) => {
-        const cars = await db.find({});
+        try{
+            const cars = await db.find({});
 
-        res.json(cars);
+            res.json(cars);   
+        }
+        catch(e){
+            res.json(e.message);
+        }
     },
 
     getCar: async (req, res) => {
-        const cars = await db.findById(req.params.id);
+        try{
+            const cars = await db.findById(req.params.id);
 
-        return res.json(cars);
+            return res.json(cars);
+        }
+        catch(e){
+            res.json(e.message);
+        }
     },
 
     postCar: async (req, res) => {
-        await db.create(req.body);
+        try{
+            await db.create(req.body);
 
-        res.end('Car is added');
+            res.end('Car is added');
+        }
+        catch(e){
+            res.json(e.message);
+        }
     },
 
     deleteCar: async (req, res) => {
-        await db.deleteOne({_id:req.params.id});
+        try{
+            await db.deleteOne({_id:req.params.id});
 
-        res.end('Car deleted');
+            res.end('Car deleted');
+        }
+        catch(e){
+            res.json(e.message);
+        }
     },
 
     updateCar: async (req, res) => {
-        await db.updateOne({_id: req.params.id}, {$set: req.body});
+        try{
+            await db.updateOne({_id: req.params.id}, {$set: req.body});
 
-        res.end('Car updated');
+            res.end('Car updated');
+        }
+        catch(e){
+            res.json(e.message);
+        }
     }
 };
