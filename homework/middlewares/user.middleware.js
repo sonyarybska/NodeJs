@@ -1,11 +1,12 @@
-const {Types} = require("mongoose");
+const {Types} = require('mongoose');
 
 const db = require('../dataBase/User');
 
 module.exports = {
     createUserMiddleware: async (req, res, next) => {
         try {
-            const user = await db.findOne({email: req.body.email, password: req.body.password});
+            const {email}=req.body;
+            const user = await db.findOne({email});
 
             if (user) {
                 throw new Error('User already exists');
@@ -19,7 +20,8 @@ module.exports = {
 
     checkLogin: async (req, res, next) => {
         try {
-            const user = await db.findOne({email: req.body.email, password: req.body.password});
+            const {email,password}=req.body;
+            const user = await db.findOne({email,password});
             req.body = user;
 
             if (!user) {
