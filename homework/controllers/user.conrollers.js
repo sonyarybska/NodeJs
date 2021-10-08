@@ -1,4 +1,5 @@
 const User = require('../dataBase/User');
+const {hesh, comparing} = require('../validators/user.validators');
 
 module.exports = {
     getUsers: async (req, res) => {
@@ -15,8 +16,8 @@ module.exports = {
         try {
             const {id} = req.params;
             const user = await User.findById(id);
-
-            res.json(user);
+            const heshPas =hesh(user.password);
+            res.json({...user,password:heshPas});
         } catch (e) {
             res.json(e.message);
         }
