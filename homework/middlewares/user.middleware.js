@@ -1,11 +1,13 @@
 const {Types} = require("mongoose");
 
 const db = require('../dataBase/User');
+const {createUserValidator} = require('../validators/user.validator');
 
 module.exports = {
     createUserMiddleware: async (req, res, next) => {
         try {
-            const user = await db.findOne({email: req.body.email, password: req.body.password});
+            const {email} = req.body;
+            const user = await db.findOne({email});
 
             if (user) {
                 throw new Error('User already exists');
@@ -17,14 +19,15 @@ module.exports = {
         }
     },
 
-    checkLogin: async (req, res, next) => {
+    isUserValid: (req, res, next) => {
         try {
-            const user = await db.findOne({email: req.body.email, password: req.body.password});
-            req.body = user;
+            const {error, value} = createUserValidator.validate(req.body);
 
-            if (!user) {
-                throw new Error('The login or password is incorrect');
+            if (error) {
+                throw new Error(error.details[0].message);
             }
+
+            req.body = value;
 
             next();
         } catch (e) {

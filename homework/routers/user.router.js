@@ -1,12 +1,13 @@
 const router = require('express').Router();
 
-const userMiddlewares = require('../middlewares/user.middleware');
-const userControllers = require('../controllers/user.conrollers');
+const {isUserValid, checkExistUser, createUserMiddleware} = require('../middlewares/user.middleware');
+const {getUser, getUsers, postUser, updateUser, deleteUser} = require('../controllers/user.conrollers');
 
-router.get('/', userControllers.getUsers);
-router.post('/', userMiddlewares.createUserMiddleware, userControllers.postUser);
+router.get('/', getUsers);
+router.post('/', isUserValid, createUserMiddleware, postUser);
 
-router.get('/:id', userMiddlewares.checkExistUser, userControllers.getUser);
-router.delete('/:id', userMiddlewares.checkExistUser, userControllers.deleteUser);
+router.get('/:id', checkExistUser, getUser);
+router.put('/:id', isUserValid, checkExistUser, updateUser);
+router.delete('/:id', checkExistUser, deleteUser);
 
 module.exports = router;

@@ -1,12 +1,15 @@
-const User = require('../dataBase/User');
-const {hesh, comparing} = require('../validators/user.validators');
+const db = require('../dataBase/User');
+const {hash} = require('../services/password.service');
+const {userNormalizator} = require('../helpers/user.helper');
 
 module.exports = {
     getUsers: async (req, res) => {
         try {
-            const users = await User.find({});
+            const users = await db.find({}).lean();
 
-            res.json(users);
+            const newUsers = users.map(value => userNormalizator(value));
+
+            res.json(newUsers);
         } catch (e) {
             res.json(e.message);
         }
@@ -15,9 +18,11 @@ module.exports = {
     getUser: async (req, res) => {
         try {
             const {id} = req.params;
-            const user = await User.findById(id);
-            const heshPas =hesh(user.password);
-            res.json({...user,password:heshPas});
+            const user = await db.findById(id).lean();
+
+            const newUser = userNormalizator(user);
+
+            res.json(newUser);
         } catch (e) {
             res.json(e.message);
         }
@@ -25,7 +30,9 @@ module.exports = {
 
     postUser: async (req, res) => {
         try {
-            await User.create(req.body);
+            const hashPas = await hash(req.body.password);
+
+            await db.create({...req.body, password: hashPas});
 
             res.end('User is added');
         } catch (e) {
@@ -37,7 +44,7 @@ module.exports = {
         try {
             const {id} = req.params;
 
-            await User.deleteOne({_id: id});
+            await db.deleteOne({_id: id});
 
             res.end('User is deleted');
         } catch (e) {
@@ -45,9 +52,11 @@ module.exports = {
         }
     },
 
-    authUsers: (req, res) => {
+    updateUser: async (req, res) => {
         try {
-            res.json(`Welcome ${req.body.email}`);
+            await db.updateOne({_id: req.params.id}, {$set: {name: req.body.name}});
+
+            res.end('User updated');
         } catch (e) {
             res.json(e.message);
         }
