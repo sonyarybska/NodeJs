@@ -1,7 +1,7 @@
-const {Types} = require("mongoose");
+const {Types} = require('mongoose');
 
 const db = require('../dataBase/User');
-const {updateUserValidator} = require("../validators/user.validator");
+const {updateUserValidator} = require('../validators/user.validator');
 const {createUserValidator} = require('../validators/user.validator');
 
 module.exports = {
@@ -29,7 +29,6 @@ module.exports = {
             }
 
             req.body = value;
-
             next();
         } catch (e) {
             res.json(e.message);
@@ -45,7 +44,6 @@ module.exports = {
             }
 
             req.body = value;
-
             next();
         } catch (e) {
             res.json(e.message);
@@ -62,7 +60,6 @@ module.exports = {
             }
 
             req.body = user;
-
             next();
         } catch (e) {
             res.json(e.message);
