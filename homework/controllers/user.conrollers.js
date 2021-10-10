@@ -15,12 +15,9 @@ module.exports = {
         }
     },
 
-    getUser: async (req, res) => {
+    getUser: (req, res) => {
         try {
-            const {id} = req.params;
-            const user = await db.findById(id).lean();
-
-            const newUser = userNormalizator(user);
+            const newUser = userNormalizator(req.body);
 
             res.json(newUser);
         } catch (e) {

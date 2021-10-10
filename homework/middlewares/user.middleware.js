@@ -1,6 +1,7 @@
 const {Types} = require("mongoose");
 
 const db = require('../dataBase/User');
+const {updateUserValidator} = require("../validators/user.validator");
 const {createUserValidator} = require('../validators/user.validator');
 
 module.exports = {
@@ -35,6 +36,22 @@ module.exports = {
         }
     },
 
+    isUpdateValid: (req, res, next) => {
+        try {
+            const {error, value} = updateUserValidator.validate(req.body);
+
+            if (error) {
+                throw new Error(error.details[0].message);
+            }
+
+            req.body = value;
+
+            next();
+        } catch (e) {
+            res.json(e.message);
+        }
+    },
+
     checkExistUser: async (req, res, next) => {
         try {
             const {id} = req.params;
@@ -43,6 +60,8 @@ module.exports = {
             if (!user) {
                 throw new Error('There is no such user');
             }
+
+            req.body = user;
 
             next();
         } catch (e) {
