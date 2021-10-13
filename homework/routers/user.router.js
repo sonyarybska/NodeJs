@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
-const {userMiddleware}=require('../middlewares');
-const {userControllers}=require('../controllers');
+const {userMiddleware} = require('../middlewares');
+const {userControllers} = require('../controllers');
 
 router.get('/', userControllers.getUsers);
 router.post('/', userMiddleware.isUserValid, userMiddleware.createUserMiddleware, userControllers.postUser);

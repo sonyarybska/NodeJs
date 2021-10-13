@@ -8,14 +8,13 @@ module.exports = {
             const users = await db.find({})
                 .lean()
                 .select('-password');
-
             res.json(users);
         } catch (e) {
             res.json(e.message);
         }
     },
 
-    getUser:async (req, res, next) => {
+    getUser: async (req, res, next) => {
         try {
             const user = await db.find({_id: req.params.id});
 

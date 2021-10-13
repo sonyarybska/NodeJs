@@ -37,4 +37,16 @@ module.exports = {
             next(e);
         }
     },
+
+    checkingRole: (roleArr = []) => (req, res, next) => {
+        try {
+            if (!roleArr.includes(roleArr)) {
+                throw new ApiError('Access denied');
+            }
+
+            next();
+        } catch (e) {
+            next(e);
+        }
+    }
 };

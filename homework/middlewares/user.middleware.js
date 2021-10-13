@@ -11,7 +11,7 @@ module.exports = {
             const user = await db.findOne({email});
 
             if (user) {
-                return next({message:'User already exists',status:409});
+                return next({message: 'User already exists', status: 409});
             }
 
             next();
@@ -25,7 +25,7 @@ module.exports = {
             const {error, value} = createUserValidator.validate(req.body);
 
             if (error) {
-                throw new ApiError(error.details[0].message,400);
+                throw new ApiError(error.details[0].message, 400);
             }
 
             req.body = value;
@@ -41,7 +41,7 @@ module.exports = {
             const {error, value} = updateUserValidator.validate(req.body);
 
             if (error) {
-                throw new ApiError(error.details[0].message,400);
+                throw new ApiError(error.details[0].message, 400);
             }
 
             req.body = value;
@@ -58,12 +58,12 @@ module.exports = {
             const user = await db.exists({_id: Types.ObjectId(id)});
 
             if (!user) {
-                throw new ApiError('There is no such user',404);
+                throw new ApiError('There is no such user', 404);
             }
 
             next();
         } catch (e) {
             next(e);
         }
-    }
+    },
 };

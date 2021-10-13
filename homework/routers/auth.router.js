@@ -2,7 +2,13 @@ const router = require('express').Router();
 
 const {authMiddleware} = require('../middlewares');
 const {authContollers} = require('../controllers');
+const {userRole: {ADMIN, MANAGER}} = require('../configs');
 
-router.post('/', authMiddleware.isAuthValid, authMiddleware.checkLogin, authContollers.authUsers);
+router.post('/',
+    authMiddleware.isAuthValid,
+    authMiddleware.checkingRole([ADMIN, MANAGER]),
+    authMiddleware.checkLogin,
+    authContollers.authUsers
+);
 
 module.exports = router;

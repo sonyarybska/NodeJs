@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const {regexes} = require('../configs');
+const {regexes, userRole: {ADMIN, MANAGER, USER}} = require('../configs');
 
 const createUserValidator = Joi.object({
     name: Joi.string()
@@ -19,7 +19,12 @@ const createUserValidator = Joi.object({
         .min(5)
         .max(10)
         .trim()
+        .required(),
+
+    role: Joi.string()
+        .trim()
         .required()
+        .allow(ADMIN, MANAGER, USER)
 });
 
 const updateUserValidator = Joi.object({
@@ -28,7 +33,7 @@ const updateUserValidator = Joi.object({
         .min(2)
         .max(30)
         .trim()
-        .required(),
+        .required()
 });
 
 module.exports = {createUserValidator, updateUserValidator};
