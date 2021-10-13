@@ -1,7 +1,6 @@
 const Joi = require('joi');
 
-const {EMAIL_REGEX} = require('../configs/regexes');
-const {userRole: {ADMIN, MANAGER, USER}} = require('../configs');
+const {userRole: {ADMIN, MANAGER, USER},regexes:{EMAIL_REGEX}} = require('../configs');
 
 const authValidator = Joi.object({
     email: Joi.string()
