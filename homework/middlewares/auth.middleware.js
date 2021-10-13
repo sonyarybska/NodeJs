@@ -40,7 +40,7 @@ module.exports = {
 
     checkingRole: (roleArr = []) => (req, res, next) => {
         try {
-            if (!roleArr.includes(roleArr)) {
+            if (!roleArr.includes(req.body.role)) {
                 throw new ApiError('Access denied');
             }
 
