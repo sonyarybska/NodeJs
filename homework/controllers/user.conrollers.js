@@ -5,23 +5,25 @@ const {userNormalizator} = require('../helpers/user.helper');
 module.exports = {
     getUsers: async (req, res) => {
         try {
-            const users = await db.find({}).lean();
+            const users = await db.find({})
+                .lean()
+                .select('-password');
 
-            const newUsers = users.map(value => userNormalizator(value));
-
-            res.json(newUsers);
+            res.json(users);
         } catch (e) {
             res.json(e.message);
         }
     },
 
-    getUser: (req, res) => {
+    getUser:async (req, res, next) => {
         try {
-            const newUser = userNormalizator(req.body);
+            const user = await db.find({_id: req.params.id});
+
+            const newUser = userNormalizator(user);
 
             res.json(newUser);
         } catch (e) {
-            res.json(e.message);
+            next(e);
         }
     },
 
@@ -31,7 +33,7 @@ module.exports = {
 
             await db.create({...req.body, password: hashPas});
 
-            res.end('User is added');
+            res.json('User is added');
         } catch (e) {
             res.json(e.message);
         }

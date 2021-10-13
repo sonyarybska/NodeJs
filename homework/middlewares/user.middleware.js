@@ -1,8 +1,8 @@
-const {Types} = require("mongoose");
+const {Types} = require('mongoose');
 
 const db = require('../dataBase/User');
-const {updateUserValidator} = require("../validators/user.validator");
-const {createUserValidator} = require('../validators/user.validator');
+const {ApiError} = require('../errors/ApiError');
+const {userValidators: {createUserValidator, updateUserValidator}} = require('../validators');
 
 module.exports = {
     createUserMiddleware: async (req, res, next) => {
@@ -11,12 +11,12 @@ module.exports = {
             const user = await db.findOne({email});
 
             if (user) {
-                throw new Error('User already exists');
+                return next({message:'User already exists',status:409});
             }
 
             next();
         } catch (e) {
-            res.json(e.message);
+            next(e);
         }
     },
 
@@ -25,14 +25,14 @@ module.exports = {
             const {error, value} = createUserValidator.validate(req.body);
 
             if (error) {
-                throw new Error(error.details[0].message);
+                throw new ApiError(error.details[0].message,400);
             }
 
             req.body = value;
 
             next();
         } catch (e) {
-            res.json(e.message);
+            next(e);
         }
     },
 
@@ -41,14 +41,14 @@ module.exports = {
             const {error, value} = updateUserValidator.validate(req.body);
 
             if (error) {
-                throw new Error(error.details[0].message);
+                throw new ApiError(error.details[0].message,400);
             }
 
             req.body = value;
 
             next();
         } catch (e) {
-            res.json(e.message);
+            next(e);
         }
     },
 
@@ -58,14 +58,12 @@ module.exports = {
             const user = await db.exists({_id: Types.ObjectId(id)});
 
             if (!user) {
-                throw new Error('There is no such user');
+                throw new ApiError('There is no such user',404);
             }
-
-            req.body = user;
 
             next();
         } catch (e) {
-            res.json(e.message);
+            next(e);
         }
     }
 };

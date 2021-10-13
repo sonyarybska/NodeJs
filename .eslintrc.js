@@ -39,7 +39,7 @@ module.exports = {
         'newline-per-chained-call': 'error',
         'new-parens': 'error',
         'no-alert': 'error',
-        semi: "error",
+        semi: 'error',
         'no-duplicate-imports': 'error',
         'no-nested-ternary': 'error',
         'no-mixed-spaces-and-tabs': 'error',
@@ -80,6 +80,10 @@ module.exports = {
             {ignoreArrayIndexes: true}
         ],
         'no-multi-spaces': 'error',
+        quotes: [
+            'error',
+            'single'
+        ],
         'no-multi-str': 'error',
         'no-multiple-empty-lines': 'error',
         'no-new': 'error',

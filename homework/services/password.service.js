@@ -1,5 +1,7 @@
 const bcrypt = require('bcrypt');
 
+const {ApiError} = require('../errors/ApiError');
+
 module.exports = {
     hash: (password) => bcrypt.hash(password, 10),
 
@@ -7,7 +9,7 @@ module.exports = {
         const matchedPassword = await bcrypt.compare(password, hashPassword);
 
         if (!matchedPassword) {
-            throw new Error('Wrong email or password');
+            throw new ApiError('Wrong email or password',400);
         }
     }
 };

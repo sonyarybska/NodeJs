@@ -1,6 +1,7 @@
 const db = require('../dataBase/User');
-const {authValidator} = require("../validators/auth.validator");
-const {comparing} = require("../services/password.service");
+const {ApiError} = require('../errors/ApiError');
+const {authValidators: {authValidator}} = require('../validators');
+const {comparing} = require('../services/password.service');
 
 module.exports = {
     isAuthValid: (req, res, next) => {
@@ -8,14 +9,14 @@ module.exports = {
             const {error, value} = authValidator.validate(req.body);
 
             if (error) {
-                throw new Error(error.details[0].message);
+                throw new ApiError(error.details[0].message, 500, 400);
             }
 
             req.body = value;
 
             next();
         } catch (e) {
-            res.json(e.message);
+            next(e);
         }
     },
 
@@ -26,14 +27,14 @@ module.exports = {
             const user = await db.findOne({email});
 
             if (!user) {
-                throw new Error('Wrong email or password');
+                throw new ApiError('Wrong email or password', 404);
             }
 
             await comparing(password, user.password);
 
             next();
         } catch (e) {
-            res.json(e.message);
+            next(e);
         }
     },
 };

@@ -1,12 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
-const {PORT, MONGO_URL} = require('./configs/config');
+const {mainConfigs} = require('./configs');
 
-const userRouter = require('./routers/user.router');
-const authRouter = require('./routers/auth.router');
+const {authRouter, userRouter} = require('./routers');
 
-mongoose.connect(MONGO_URL);
+mongoose.connect(mainConfigs.MONGO_URL);
 
 const app = express();
 
@@ -15,7 +14,13 @@ app.use(express.urlencoded());
 
 app.use('/users', userRouter);
 app.use('/login', authRouter);
+// eslint-disable-next-line no-unused-vars
+app.use('*', (err, req, res, next) => {
+    res
+        .status(err.status || 500)
+        .json({message: err.message});
+});
 
-app.listen(PORT, () => {
+app.listen(mainConfigs.PORT, () => {
     console.log('App listen 5000');
 });
