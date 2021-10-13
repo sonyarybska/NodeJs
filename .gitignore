@@ -5,6 +5,6 @@
 ./.idea/*
 
 # local env files
-.env
+homework/.env
 .env.local
 .env.*.local

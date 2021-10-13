@@ -1,6 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
+require('dotenv').config({path:`${__dirname}/.env`});
+
 const {mainConfigs} = require('./configs');
 
 const {authRouter, userRouter} = require('./routers');
@@ -14,6 +16,7 @@ app.use(express.urlencoded());
 
 app.use('/users', userRouter);
 app.use('/login', authRouter);
+
 // eslint-disable-next-line no-unused-vars
 app.use('*', (err, req, res, next) => {
     res
@@ -22,5 +25,6 @@ app.use('*', (err, req, res, next) => {
 });
 
 app.listen(mainConfigs.PORT, () => {
+    console.log(process.env);
     console.log('App listen 5000');
 });
