@@ -1,6 +1,6 @@
 const {model, Schema} = require('mongoose');
 
-const {userRole:{ADMIN, MANAGER, USER}} = require('../configs');
+const {userRole: {ADMIN, MANAGER, USER}} = require('../configs');
 
 const UserSchema = new Schema({
     name: {

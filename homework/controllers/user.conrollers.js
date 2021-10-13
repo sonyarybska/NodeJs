@@ -32,7 +32,7 @@ module.exports = {
 
             await db.create({...req.body, password: hashPas});
 
-            res.json('User is added');
+            res.json('User is added').status(200);
         } catch (e) {
             res.json(e.message);
         }

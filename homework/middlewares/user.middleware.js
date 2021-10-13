@@ -1,8 +1,9 @@
 const {Types} = require('mongoose');
 
 const db = require('../dataBase/User');
-const {ApiError} = require('../errors/ApiError');
 const {userValidators: {createUserValidator, updateUserValidator}} = require('../validators');
+const {ApiError: {ApiError}, errorMessages: {USER_EXIST, NOT_FOUND_USER, USER_ID_VALID}} = require('../errors');
+
 
 module.exports = {
     createUserMiddleware: async (req, res, next) => {
@@ -11,9 +12,9 @@ module.exports = {
             const user = await db.findOne({email});
 
             if (user) {
-                return next({message: 'User already exists', status: 409});
-            }
+                throw new ApiError(USER_EXIST.message, USER_EXIST.code);
 
+            }
             next();
         } catch (e) {
             next(e);
@@ -29,7 +30,6 @@ module.exports = {
             }
 
             req.body = value;
-
             next();
         } catch (e) {
             next(e);
@@ -45,7 +45,6 @@ module.exports = {
             }
 
             req.body = value;
-
             next();
         } catch (e) {
             next(e);
@@ -58,9 +57,19 @@ module.exports = {
             const user = await db.exists({_id: Types.ObjectId(id)});
 
             if (!user) {
-                throw new ApiError('There is no such user', 404);
+                throw new ApiError(NOT_FOUND_USER.message, NOT_FOUND_USER.code);
             }
+            next();
+        } catch (e) {
+            next(e);
+        }
+    },
 
+    isUserIdValid: (req, res, next) => {
+        try {
+            if (!Types.ObjectId.isValid(req.params.id)) {
+                throw new ApiError(USER_ID_VALID.message, USER_ID_VALID.code);
+            }
             next();
         } catch (e) {
             next(e);

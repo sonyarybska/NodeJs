@@ -6,8 +6,9 @@ const {userControllers} = require('../controllers');
 router.get('/', userControllers.getUsers);
 router.post('/', userMiddleware.isUserValid, userMiddleware.createUserMiddleware, userControllers.postUser);
 
-router.get('/:id', userMiddleware.checkExistUser, userControllers.getUser);
-router.put('/:id', userMiddleware.isUpdateValid, userMiddleware.checkExistUser, userControllers.updateUser);
-router.delete('/:id', userMiddleware.checkExistUser, userControllers.deleteUser);
+router.get('/:id', userMiddleware.isUserIdValid, userMiddleware.checkExistUser, userControllers.getUser);
+router.put('/:id', userMiddleware.isUserIdValid, userMiddleware.isUpdateValid,
+    userMiddleware.checkExistUser, userControllers.updateUser);
+router.delete('/:id', userMiddleware.isUserIdValid, userMiddleware.checkExistUser, userControllers.deleteUser);
 
 module.exports = router;
