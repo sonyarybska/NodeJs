@@ -1,6 +1,6 @@
 const {model, Schema} = require('mongoose');
 
-const {userRole: {ADMIN, MANAGER, USER}} = require('../constans/index');
+const {userRole: {ADMIN, MANAGER, USER}} = require('../constans');
 
 const UserSchema = new Schema({
     name: {
