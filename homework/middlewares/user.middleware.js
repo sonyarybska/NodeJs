@@ -1,9 +1,7 @@
 const {Types} = require('mongoose');
 
 const db = require('../dataBase/User');
-const {userValidators: {createUserValidator, updateUserValidator}} = require('../validators');
 const {ApiError: {ApiError}, errorMessages: {USER_EXIST, NOT_FOUND_USER, USER_ID_VALID}} = require('../errors');
-
 
 module.exports = {
     createUserMiddleware: async (req, res, next) => {
@@ -21,24 +19,9 @@ module.exports = {
         }
     },
 
-    isUserValid: (req, res, next) => {
+    isBodyValid:(validator)=> (req, res, next) => {
         try {
-            const {error, value} = createUserValidator.validate(req.body);
-
-            if (error) {
-                throw new ApiError(error.details[0].message, 400);
-            }
-
-            req.body = value;
-            next();
-        } catch (e) {
-            next(e);
-        }
-    },
-
-    isUpdateValid: (req, res, next) => {
-        try {
-            const {error, value} = updateUserValidator.validate(req.body);
+            const {error, value} = validator.validate(req.body);
 
             if (error) {
                 throw new ApiError(error.details[0].message, 400);
