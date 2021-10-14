@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded());
 
 app.use('/users', userRouter);
-app.use('/login', authRouter);
+app.use('/auth', authRouter);
 // eslint-disable-next-line no-unused-vars
 app.use('*', (err, req, res, next) => {
     res

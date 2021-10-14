@@ -4,7 +4,7 @@ const {authMiddleware} = require('../middlewares');
 const {authContollers} = require('../controllers');
 const {userRole: {ADMIN, MANAGER}} = require('../constans/');
 
-router.post('/',
+router.post('/login',
     authMiddleware.isAuthValid,
     authMiddleware.checkingRole([ADMIN, MANAGER]),
     authMiddleware.checkLogin,
