@@ -1,7 +1,6 @@
 const bcrypt = require('bcrypt');
 
-const {errorMessages: {WRONG_LOGIN_OR_PASS}} = require('../errors');
-const {ApiError} = require('../errors/ApiError');
+const {errorMessages: {WRONG_LOGIN_OR_PASS},ApiError:{ApiError}} = require('../errors');
 
 module.exports = {
     hash: (password) => bcrypt.hash(password, 10),

@@ -9,6 +9,7 @@ module.exports = {
             const users = await db.find({})
                 .lean()
                 .select('-password');
+
             res.json(users);
         } catch (e) {
             res.json(e.message);

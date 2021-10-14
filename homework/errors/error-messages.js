@@ -18,6 +18,7 @@ module.exports = {
         message: 'Not found such user',
         code: 404
     },
+
     USER_ID_VALID: {
         message: 'Wrong user id format',
         code: 404

@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 const {authMiddleware} = require('../middlewares');
 const {authContollers} = require('../controllers');
-const {userRole: {ADMIN, MANAGER}} = require('../constans/');
+const {userRole: {ADMIN, MANAGER}} = require('../constans');
 
 router.post('/login',
     authMiddleware.isAuthValid,
