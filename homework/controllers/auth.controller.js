@@ -1,4 +1,4 @@
-const {responseMessages:{SUCCESSFUL_AUTH}}=require('../constans');
+const {responseMessages: {SUCCESSFUL_AUTH}} = require('../constans');
 
 module.exports = {
     authUsers: (req, res) => {

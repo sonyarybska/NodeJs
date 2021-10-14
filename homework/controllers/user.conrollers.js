@@ -1,7 +1,7 @@
 const db = require('../dataBase/User');
 const {hash} = require('../services/password.service');
 const {userNormalizator} = require('../helpers/user.helper');
-const {responseMessages:{ADD_USER,UPDATE_USER}}=require('../constans');
+const {responseMessages: {ADD_USER, UPDATE_USER}} = require('../constans');
 
 module.exports = {
     getUsers: async (req, res) => {

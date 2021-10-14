@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 const {userMiddleware} = require('../middlewares');
 const {userControllers} = require('../controllers');
-const{userValidators:{createUserValidator,updateUserValidator}}=require('../validators');
+const {userValidators: {createUserValidator, updateUserValidator}} = require('../validators');
 
 router.get('/', userControllers.getUsers);
 router.post('/', userMiddleware.isBodyValid(createUserValidator), userMiddleware.createUserMiddleware, userControllers.postUser);

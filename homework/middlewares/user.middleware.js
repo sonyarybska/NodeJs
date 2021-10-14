@@ -19,7 +19,7 @@ module.exports = {
         }
     },
 
-    isBodyValid:(validator)=> (req, res, next) => {
+    isBodyValid: (validator) => (req, res, next) => {
         try {
             const {error, value} = validator.validate(req.body);
 
