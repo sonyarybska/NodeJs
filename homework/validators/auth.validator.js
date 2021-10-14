@@ -13,11 +13,6 @@ const authValidator = Joi.object({
         .max(10)
         .trim()
         .required(),
-
-    role: Joi.string()
-        .trim()
-        .required()
-        .allow(ADMIN, MANAGER, USER)
 });
 
 module.exports = {authValidator};

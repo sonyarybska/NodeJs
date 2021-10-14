@@ -1,4 +1,5 @@
 module.exports = {
     ApiError: require('./ApiError'),
-    errorMessages: require('./error-messages')
+    messagesEnum: require('./messages-enum'),
+    statusEnum:require('./status-enum')
 };

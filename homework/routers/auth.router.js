@@ -6,8 +6,8 @@ const {userRole: {ADMIN, MANAGER}} = require('../constans');
 
 router.post('/login',
     authMiddleware.isAuthValid,
-    authMiddleware.checkingRole([ADMIN, MANAGER]),
     authMiddleware.checkLogin,
+    authMiddleware.checkingRole([ADMIN, MANAGER]),
     authContollers.authUsers
 );
 

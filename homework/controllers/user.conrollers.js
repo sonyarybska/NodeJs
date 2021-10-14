@@ -1,7 +1,7 @@
 const db = require('../dataBase/User');
 const {hash} = require('../services/password.service');
 const {userNormalizator} = require('../helpers/user.helper');
-const {responseMessages: {ADD_USER, UPDATE_USER}} = require('../constans');
+const {messagesEnum, statusEnum} = require('../errors');
 
 module.exports = {
     getUsers: async (req, res) => {
@@ -34,7 +34,7 @@ module.exports = {
 
             await db.create({...req.body, password: hashPas});
 
-            res.status(ADD_USER.code).json(ADD_USER.message);
+            res.status(statusEnum.CREATED).json(messagesEnum.ADD_USER);
         } catch (e) {
             res.json(e.message);
         }
@@ -46,7 +46,7 @@ module.exports = {
 
             await db.deleteOne({_id: id});
 
-            res.sendStatus(204);
+            res.sendStatus(statusEnum.NO_CONTENT);
         } catch (e) {
             res.json(e.message);
         }
@@ -56,7 +56,7 @@ module.exports = {
         try {
             await db.updateOne({_id: req.params.id}, {$set: {name: req.body.name}});
 
-            res.status(UPDATE_USER.code).json(UPDATE_USER.message);
+            res.status(statusEnum.CREATED).json(messagesEnum.UPDATE_USER);
         } catch (e) {
             res.json(e.message);
         }

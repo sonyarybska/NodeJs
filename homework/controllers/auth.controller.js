@@ -1,9 +1,12 @@
-const {responseMessages: {SUCCESSFUL_AUTH}} = require('../constans');
+const {messagesEnum, statusEnum} = require('../errors');
+const {userNormalizator} = require('../helpers/user.helper');
 
 module.exports = {
     authUsers: (req, res) => {
         try {
-            res.json(SUCCESSFUL_AUTH(req.body.email).message).status(SUCCESSFUL_AUTH.code);
+            const newUser = userNormalizator(req.body);
+
+            res.json(messagesEnum.SUCCESSFUL_AUTH(newUser.name)).status(statusEnum.CREATED);
         } catch (e) {
             res.json(e.message);
         }

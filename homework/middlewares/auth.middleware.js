@@ -1,7 +1,7 @@
 const db = require('../dataBase/User');
 const {authValidators: {authValidator}} = require('../validators');
 const {comparing} = require('../services/password.service');
-const {errorMessages: {ACCESS_DENIED, WRONG_LOGIN_OR_PASS}, ApiError: {ApiError}} = require('../errors/');
+const {messagesEnum, statusEnum, ApiError: {ApiError}} = require('../errors/');
 
 module.exports = {
     isAuthValid: (req, res, next) => {
@@ -13,6 +13,7 @@ module.exports = {
             }
 
             req.body = value;
+
             next();
         } catch (e) {
             next(e);
@@ -23,13 +24,16 @@ module.exports = {
         try {
             const {email, password} = req.body;
 
-            const user = await db.findOne({email});
+            const user = await db.findOne({email}).lean();
 
             if (!user) {
-                throw new ApiError(WRONG_LOGIN_OR_PASS.message, WRONG_LOGIN_OR_PASS.code);
+                throw new ApiError(messagesEnum.WRONG_LOGIN_OR_PASS, statusEnum.NO_FOUND);
             }
 
             await comparing(password, user.password);
+
+            req.body = user;
+
             next();
         } catch (e) {
             next(e);
@@ -39,7 +43,7 @@ module.exports = {
     checkingRole: (roleArr = []) => (req, res, next) => {
         try {
             if (!roleArr.includes(req.body.role)) {
-                throw new ApiError(ACCESS_DENIED.message, ACCESS_DENIED.code);
+                throw new ApiError(messagesEnum.ACCESS_DENIED, statusEnum.FORBIDDEN);
             }
             next();
         } catch (e) {
