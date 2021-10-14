@@ -3,10 +3,10 @@ const mongoose = require('mongoose');
 
 require('dotenv').config();
 
-const {mainConfigs} = require('./configs');
+const {MONGO_URL,PORT} = require('./configs/config');
 const {authRouter, userRouter} = require('./routers');
 
-mongoose.connect(mainConfigs.MONGO_URL);
+mongoose.connect(MONGO_URL);
 
 const app = express();
 
@@ -22,6 +22,6 @@ app.use('*', (err, req, res, next) => {
         .json({message: err.message});
 });
 
-app.listen(mainConfigs.PORT, () => {
+app.listen(PORT, () => {
     console.log('App listen 5000');
 });

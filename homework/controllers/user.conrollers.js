@@ -1,6 +1,7 @@
 const db = require('../dataBase/User');
 const {hash} = require('../services/password.service');
 const {userNormalizator} = require('../helpers/user.helper');
+const {responseMessages:{ADD_USER,UPDATE_USER}}=require('../constans');
 
 module.exports = {
     getUsers: async (req, res) => {
@@ -32,7 +33,7 @@ module.exports = {
 
             await db.create({...req.body, password: hashPas});
 
-            res.json('User is added').status(200);
+            res.status(ADD_USER.code).json(ADD_USER.message);
         } catch (e) {
             res.json(e.message);
         }
@@ -44,7 +45,7 @@ module.exports = {
 
             await db.deleteOne({_id: id});
 
-            res.end('User is deleted');
+            res.sendStatus(204);
         } catch (e) {
             res.json(e.message);
         }
@@ -54,7 +55,7 @@ module.exports = {
         try {
             await db.updateOne({_id: req.params.id}, {$set: {name: req.body.name}});
 
-            res.end('User updated');
+            res.status(UPDATE_USER.code).json(UPDATE_USER.message);
         } catch (e) {
             res.json(e.message);
         }

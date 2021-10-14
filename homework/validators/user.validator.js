@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const {regexes, userRole: {ADMIN, MANAGER, USER}} = require('../configs');
+const {regexes, userRole: {ADMIN, MANAGER, USER}} = require('../constans/index');
 
 const createUserValidator = Joi.object({
     name: Joi.string()
