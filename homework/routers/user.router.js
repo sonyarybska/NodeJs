@@ -19,8 +19,8 @@ router.get('/:id',
 
 router.put('/:id',
     userMiddleware.isUserIdValid,
-    authMiddleware.checkAccessToken,
     userMiddleware.isBodyValid(updateUserValidator),
+    authMiddleware.checkAccessToken,
     userMiddleware.checkExistUser,
     userControllers.updateUser);
 
@@ -29,7 +29,6 @@ router.delete('/:id',
     authMiddleware.checkAccessToken,
     userMiddleware.checkExistUser,
     authMiddleware.checkingRole([ADMIN, MANAGER]),
-    authMiddleware.checkAccessToken,
     userControllers.deleteUser);
 
 module.exports = router;
