@@ -9,12 +9,6 @@ router.post('/login',
     authContollers.login
 );
 
-router.post('/login',
-    authMiddleware.isAuthValid,
-    authMiddleware.checkLogin,
-    authContollers.login
-);
-
 router.post('/logout',
     authMiddleware.checkAccessToken,
     authContollers.logout
