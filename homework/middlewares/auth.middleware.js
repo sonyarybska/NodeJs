@@ -97,6 +97,7 @@ module.exports = {
             await OAuthSchema.deleteOne({refresh_token: token});
 
             req.user = tokenResponse.user_id;
+            req.token=token;
 
             next();
         } catch (e) {

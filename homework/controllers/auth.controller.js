@@ -34,7 +34,9 @@ module.exports = {
 
     refresh: async (req, res) => {
         try {
-            const {user} = req;
+            const {user,token} = req;
+
+            await OAuthSchema.deleteOne({refresh_token: token});
 
             const tokenRefreshPair = generateToken();
 
