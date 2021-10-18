@@ -7,4 +7,5 @@ module.exports = {
     NOT_FOUND_USER: 'Not found such user',
     USER_ID_VALID: 'Wrong user id format',
     SUCCESSFUL_AUTH: (email) => `Welcome ${email}`,
+    INVALID_TOKEN:'Invalid token',
 };

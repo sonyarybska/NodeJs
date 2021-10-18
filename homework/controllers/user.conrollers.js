@@ -42,9 +42,9 @@ module.exports = {
 
     deleteUser: async (req, res) => {
         try {
-            const {id} = req.params;
+            const {user} = req;
 
-            await db.deleteOne({_id: id});
+            await db.deleteOne({_id: user._id});
 
             res.sendStatus(statusEnum.NO_CONTENT);
         } catch (e) {
