@@ -3,6 +3,7 @@ const {authValidators: {authValidator}} = require('../validators');
 const {passwordService: {comparing}} = require('../services');
 const {messagesEnum, statusEnum, ApiError: {ApiError}} = require('../errors/');
 const {authService} = require('../services');
+const {AUTHORIZATION}=require('../constans/header-enum');
 
 module.exports = {
     isAuthValid: (req, res, next) => {
@@ -28,7 +29,7 @@ module.exports = {
             const user = await UserSchema.findOne({email}).lean();
 
             if (!user) {
-                throw new ApiError(messagesEnum.WRONG_LOGIN_OR_PASS, statusEnum.NO_FOUND);
+                throw new ApiError(messagesEnum.WRONG_LOGIN_OR_PASS, statusEnum.BAD_REQUEST);
             }
 
             await comparing(password, user.password);
@@ -56,10 +57,10 @@ module.exports = {
 
     checkAccessToken: async (req, res, next) => {
         try {
-            const token = req.get('Authorization');
+            const token = req.get(AUTHORIZATION);
 
             if (!token) {
-                throw new ApiError('ddd', 401);
+                throw new ApiError(messagesEnum.ACCESS_DENIED, statusEnum.FORBIDDEN);
             }
 
             authService.verifyToken(token);
@@ -80,7 +81,7 @@ module.exports = {
 
     checkRefreshToken: async (req, res, next) => {
         try {
-            const token = req.get('Authorization');
+            const token = req.get(AUTHORIZATION);
 
             if (!token) {
                 throw new ApiError(messagesEnum.INVALID_TOKEN, statusEnum.UNAUTHORIZED);
@@ -97,7 +98,6 @@ module.exports = {
             await OAuthSchema.deleteOne({refresh_token: token});
 
             req.user = tokenResponse.user_id;
-            req.token=token;
 
             next();
         } catch (e) {

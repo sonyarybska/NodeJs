@@ -19,13 +19,14 @@ router.get('/:id',
 
 router.put('/:id',
     userMiddleware.isUserIdValid,
+    authMiddleware.checkAccessToken,
     userMiddleware.isBodyValid(updateUserValidator),
     userMiddleware.checkExistUser,
-    authMiddleware.checkAccessToken,
     userControllers.updateUser);
 
 router.delete('/:id',
     userMiddleware.isUserIdValid,
+    authMiddleware.checkAccessToken,
     userMiddleware.checkExistUser,
     authMiddleware.checkingRole([ADMIN, MANAGER]),
     authMiddleware.checkAccessToken,

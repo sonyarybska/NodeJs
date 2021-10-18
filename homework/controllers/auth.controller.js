@@ -34,15 +34,13 @@ module.exports = {
 
     refresh: async (req, res) => {
         try {
-            const {user,token} = req;
-
-            await OAuthSchema.deleteOne({refresh_token: token});
+            const {user} = req;
 
             const tokenRefreshPair = generateToken();
 
             const newUser = userNormalizator(user);
 
-            await OAuthSchema.create({...tokenRefreshPair, user_id: newUser._id});
+            await OAuthSchema.findByIdAndUpdate({user_id:newUser._id},{...tokenRefreshPair});
 
             res.json({user: newUser, ...tokenRefreshPair}).status(statusEnum.CREATED);
         } catch (e) {
