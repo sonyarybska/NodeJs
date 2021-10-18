@@ -8,4 +8,5 @@ module.exports = {
     USER_ID_VALID: 'Wrong user id format',
     SUCCESSFUL_AUTH: (email) => `Welcome ${email}`,
     INVALID_TOKEN:'Invalid token',
+    BAD_REQUEST: 'Bad request'
 };
