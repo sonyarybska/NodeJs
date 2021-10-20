@@ -1,10 +1,10 @@
 const router = require('express').Router();
 
-const {userMiddleware, actionMiddleware} = require('../middlewares');
+const {actionMiddleware} = require('../middlewares');
 const {passwordConroller} = require('../controllers');
 
-router.post('/forgot/:id',
-    userMiddleware.checkExistUser,
+router.post('/forgot',
+    actionMiddleware.checkExistUserByEmail,
     passwordConroller.forgot
 );
 

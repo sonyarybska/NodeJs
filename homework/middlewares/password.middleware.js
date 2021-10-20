@@ -1,5 +1,5 @@
 const {authService} = require('../services');
-const {ActionSchema} = require('../dataBase');
+const {ActionSchema, UserSchema} = require('../dataBase');
 const {typeTokenEnum, headerEnum} = require('../constans');
 const {passwordValidator: {passwordValidator}} = require('../validators');
 const {statusEnum, messagesEnum, ApiError: {ApiError}} = require('../errors');
@@ -15,6 +15,24 @@ module.exports = {
             }
 
             req.body = value;
+
+            next();
+        } catch (e) {
+            next(e);
+        }
+    },
+
+    checkExistUserByEmail: async (req, res, next) => {
+        try {
+            const {email}=req.body;
+
+            const user = await UserSchema.findOne({email});
+
+            if (!user) {
+                throw new ApiError(messagesEnum.NOT_FOUND_USER, statusEnum.NO_FOUND);
+            }
+
+            req.body = user;
 
             next();
         } catch (e) {
