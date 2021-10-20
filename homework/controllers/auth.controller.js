@@ -1,7 +1,7 @@
-const {authService: {generateToken}} = require('../services');
-const {statusEnum} = require('../errors');
-const {userNormalizator} = require('../helpers/user.helper');
 const {OAuthSchema} = require('../dataBase');
+const {statusEnum} = require('../errors');
+const {authService: {generateToken}} = require('../services');
+const {userNormalizator} = require('../helpers/user.helper');
 
 module.exports = {
     login: async (req, res) => {
@@ -40,7 +40,7 @@ module.exports = {
 
             const newUser = userNormalizator(user);
 
-            await OAuthSchema.findByIdAndUpdate({user_id:newUser._id},{...tokenRefreshPair});
+            await OAuthSchema.findByIdAndUpdate({user_id: newUser._id}, {...tokenRefreshPair});
 
             res.json({user: newUser, ...tokenRefreshPair}).status(statusEnum.CREATED);
         } catch (e) {

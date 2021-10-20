@@ -1,10 +1,8 @@
 const jwt = require('jsonwebtoken');
 
-const {ACCESS} = require('../constans/typeToken-enum');
-const {ApiError} = require('../errors/ApiError');
-const {messagesEnum, statusEnum} = require('../errors/');
-const {JWT_ACCESS_SECRET, JWT_REFRESH_SECRET} = require('../configs/config');
-
+const {typeTokenEnum: {ACCESS, REFRESH, ACTION}} = require('../constans');
+const {ApiError: {ApiError}, messagesEnum, statusEnum} = require('../errors');
+const {JWT_ACCESS_SECRET, JWT_REFRESH_SECRET, JWT_ACTION_SECRET} = require('../configs/config');
 
 module.exports = {
     generateToken: () => {
@@ -18,12 +16,23 @@ module.exports = {
     },
 
     verifyToken(token, type = ACCESS) {
+        let secretWord = '';
         try {
-            const secretWord = type === ACCESS ? JWT_ACCESS_SECRET : JWT_REFRESH_SECRET;
-
+            switch (type) {
+                case ACCESS:
+                    secretWord = JWT_ACCESS_SECRET;
+                    break;
+                case REFRESH:
+                    secretWord = JWT_REFRESH_SECRET;
+                    break;
+                case ACTION:
+                    secretWord = JWT_ACTION_SECRET;
+            }
             jwt.verify(token, secretWord);
         } catch (e) {
             throw new ApiError(messagesEnum.INVALID_TOKEN, statusEnum.UNAUTHORIZED);
         }
-    }
+    },
+
+    createActionToken: () => jwt.sign({}, JWT_ACTION_SECRET, {expiresIn: '7d'})
 };

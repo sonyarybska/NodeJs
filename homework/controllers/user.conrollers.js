@@ -1,12 +1,12 @@
-const db = require('../dataBase/User');
-const {hash} = require('../services/password.service');
-const {userNormalizator} = require('../helpers/user.helper');
+const {UserSchema} = require('../dataBase');
+const {emailTemplatesEnum}=require('../constans');
 const {messagesEnum, statusEnum} = require('../errors');
+const {emailService,passwordService} = require('../services');
 
 module.exports = {
     getUsers: async (req, res) => {
         try {
-            const users = await db.find({})
+            const users = await UserSchema.find({})
                 .lean()
                 .select('-password');
 
@@ -18,11 +18,9 @@ module.exports = {
 
     getUser: async (req, res, next) => {
         try {
-            const user = await db.find({_id: req.params.id});
+            const user = await UserSchema.find({_id: req.params.id}).select('-password');
 
-            const newUser = userNormalizator(user);
-
-            res.json(newUser);
+            res.json(user);
         } catch (e) {
             next(e);
         }
@@ -30,9 +28,11 @@ module.exports = {
 
     postUser: async (req, res) => {
         try {
-            const hashPas = await hash(req.body.password);
+            const hashPas = await passwordService.hash(req.body.password);
 
-            await db.create({...req.body, password: hashPas});
+            await UserSchema.create({...req.body, password: hashPas});
+
+            await emailService(req.body.email, emailTemplatesEnum.WELCOME);
 
             res.status(statusEnum.CREATED).json(messagesEnum.ADD_USER);
         } catch (e) {
@@ -44,7 +44,7 @@ module.exports = {
         try {
             const {user} = req;
 
-            await db.deleteOne({_id: user._id});
+            await UserSchema.deleteOne({_id: user._id});
 
             res.sendStatus(statusEnum.NO_CONTENT);
         } catch (e) {
@@ -54,7 +54,7 @@ module.exports = {
 
     updateUser: async (req, res) => {
         try {
-            await db.updateOne({_id: req.params.id}, {$set: {name: req.body.name}});
+            await UserSchema.updateOne({_id: req.params.id}, {$set: {name: req.body.name}});
 
             res.status(statusEnum.CREATED).json(messagesEnum.UPDATE_USER);
         } catch (e) {

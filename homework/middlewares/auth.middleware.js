@@ -1,9 +1,9 @@
 const {UserSchema, OAuthSchema} = require('../dataBase');
 const {authValidators: {authValidator}} = require('../validators');
 const {passwordService: {comparing}} = require('../services');
-const {messagesEnum, statusEnum, ApiError: {ApiError}} = require('../errors/');
+const {messagesEnum, statusEnum, ApiError: {ApiError}} = require('../errors');
 const {authService} = require('../services');
-const {AUTHORIZATION}=require('../constans/header-enum');
+const {headerEnum:{AUTHORIZATION}} = require('../constans');
 
 module.exports = {
     isAuthValid: (req, res, next) => {

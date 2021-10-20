@@ -37,13 +37,12 @@ module.exports = {
     checkExistUser: async (req, res, next) => {
         try {
             const {id} = req.params;
-            const user = await UserSchema.findOne({_id: Types.ObjectId(id)});
+            const user = await UserSchema.findOne({_id: Types.ObjectId(id)}).lean();
 
             if (!user) {
                 throw new ApiError(messagesEnum.NOT_FOUND_USER, statusEnum.NO_FOUND);
             }
-
-            req.body=user;
+            req.body = user;
             next();
         } catch (e) {
             next(e);
