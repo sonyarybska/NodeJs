@@ -1,3 +1,4 @@
+const {OAuthSchema} = require('../dataBase');
 const {UserSchema} = require('../dataBase');
 const {emailTemplatesEnum}=require('../constans');
 const {messagesEnum, statusEnum} = require('../errors');
@@ -45,6 +46,8 @@ module.exports = {
             const {user} = req;
 
             await UserSchema.deleteOne({_id: user._id});
+            
+            await OAuthSchema.deleteMany({user_id: user._id});
 
             res.sendStatus(statusEnum.NO_CONTENT);
         } catch (e) {
