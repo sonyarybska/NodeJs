@@ -24,7 +24,7 @@ module.exports = {
 
     checkExistUserByEmail: async (req, res, next) => {
         try {
-            const {email}=req.body;
+            const {email} = req.body;
 
             const user = await UserSchema.findOne({email});
 
@@ -55,6 +55,8 @@ module.exports = {
             if (!tokenResponse) {
                 throw new ApiError(messagesEnum.INVALID_TOKEN, statusEnum.UNAUTHORIZED);
             }
+
+            await ActionSchema.deleteOne({action_token: token});
 
             req.user = tokenResponse.user_id;
 
