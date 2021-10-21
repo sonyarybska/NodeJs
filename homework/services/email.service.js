@@ -7,10 +7,10 @@ const allTemplates = require('../email-templates');
 const {messagesEnum, statusEnum, ApiError: {ApiError}} = require('../errors');
 
 const templateParser = new EmailTemplates({
-    views: {
-        root: path.join(process.cwd(), 'email-templates')
+        views: {
+            root: path.join(process.cwd(), 'email-templates')
+        }
     }
-}
 );
 
 const transporter = nodemailer.createTransport({

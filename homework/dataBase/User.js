@@ -32,6 +32,12 @@ const UserSchema = new Schema({
             MANAGER,
             USER
         ]
+    },
+
+    is_active: {
+        type: Boolean,
+        default: false,
+        required:true
     }
 });
 

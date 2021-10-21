@@ -14,7 +14,7 @@ const ActionSchema = new Schema({
         ref: 'user'
     },
 
-    type_action_token: {
+    type: {
         type: String,
         trim: true,
         required: true

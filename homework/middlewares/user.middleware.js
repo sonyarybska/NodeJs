@@ -13,6 +13,7 @@ module.exports = {
                 throw new ApiError(messagesEnum.USER_EXIST, statusEnum.CONFLICT);
 
             }
+
             next();
         } catch (e) {
             next(e);
@@ -37,12 +38,14 @@ module.exports = {
     checkExistUser: async (req, res, next) => {
         try {
             const {id} = req.params;
-            const user = await UserSchema.findOne({_id: Types.ObjectId(id)}).lean();
+            const user = await UserSchema.findOne({_id: Types.ObjectId(id)});
 
             if (!user) {
                 throw new ApiError(messagesEnum.NOT_FOUND_USER, statusEnum.NO_FOUND);
             }
-            req.body = user;
+
+            req.role = user.role;
+
             next();
         } catch (e) {
             next(e);
