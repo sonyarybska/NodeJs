@@ -19,7 +19,7 @@ module.exports = {
                 user_id: newUser._id
             });
 
-            await emailService(user.email, emailTemplatesEnum.FORGOT_PASSWORD, {userName: newUser.name});
+            await emailService(user.email, emailTemplatesEnum.FORGOT_PASSWORD, {userName: newUser.name,forgotPasswordUrl:`http://localhost:5000/forgotPassword?token=${actionToken}`});
 
             res.json({user: newUser, actionToken}).status(statusEnum.CREATED);
         } catch (e) {
