@@ -146,8 +146,6 @@ module.exports = {
                 throw new ApiError(messagesEnum.ACCESS_DENIED, statusEnum.FORBIDDEN);
             }
 
-            console.log(token);
-
             authService.verifyToken(token, typeTokenEnum.ACTION);
 
             const tokenResponse = await ActionSchema.findOne({action_token: token, type}).populate('user_id');
