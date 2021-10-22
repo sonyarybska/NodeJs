@@ -1,5 +1,5 @@
 const {UserSchema, OAuthSchema, ActionSchema} = require('../dataBase');
-const {authValidators: {authValidator}, passwordValidator: {passwordValidator}} = require('../validators');
+const {authValidators: {authValidator}, passwordValidator: {passwordValidator},mailValidator:{mailValidator}} = require('../validators');
 const {passwordService: {comparing}} = require('../services');
 const {messagesEnum, statusEnum, ApiError: {ApiError}} = require('../errors');
 const {authService} = require('../services');
@@ -72,6 +72,8 @@ module.exports = {
 
     checkExistUserByEmail: async (req, res, next) => {
         try {
+            mailValidator.validate(req.body);
+
             const {email} = req.body;
 
             const user = await UserSchema.findOne({email});
