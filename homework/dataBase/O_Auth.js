@@ -1,5 +1,7 @@
 const {model, Schema} = require('mongoose');
 
+const {modelNameEnum} = require('../constans');
+
 const oAuthSchema = new Schema({
     access_token: {
         type: String,
@@ -21,4 +23,4 @@ const oAuthSchema = new Schema({
     }
 });
 
-module.exports = model('o_auth', oAuthSchema);
+module.exports = model(modelNameEnum.O_AUTH, oAuthSchema);

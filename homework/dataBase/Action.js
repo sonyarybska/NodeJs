@@ -1,5 +1,7 @@
 const {model, Schema} = require('mongoose');
 
+const {modelNameEnum} = require('../constans');
+
 const ActionSchema = new Schema({
     action_token: {
         type: String,
@@ -21,4 +23,4 @@ const ActionSchema = new Schema({
     }
 });
 
-module.exports = model('action', ActionSchema);
+module.exports = model(modelNameEnum.ACTION, ActionSchema);

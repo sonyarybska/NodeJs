@@ -5,5 +5,6 @@ module.exports = {
     typeTokenEnum: require('./token-type-enum'),
     headerEnum: require('./header-enum'),
     emailTemplatesEnum: require('./email-templates-enum'),
-    actionTokenEnum:require('./action-token-type')
+    actionTokenEnum:require('./action-token-type'),
+    modelNameEnum:require('./model-name-enum')
 };
