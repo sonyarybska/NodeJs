@@ -1,30 +1,13 @@
 const {UserSchema, OAuthSchema, ActionSchema} = require('../dataBase');
-const {authValidators: {authValidator}, passwordValidator: {passwordValidator},mailValidator:{mailValidator}} = require('../validators');
 const {passwordService: {comparing}} = require('../services');
 const {messagesEnum, statusEnum, ApiError: {ApiError}} = require('../errors');
 const {authService} = require('../services');
 const {headerEnum, typeTokenEnum} = require('../constans');
 
 module.exports = {
-    isAuthValid: (req, res, next) => {
+    isValid: (validator) => (req, res, next) => {
         try {
-            const {error, value} = authValidator.validate(req.body);
-
-            if (error) {
-                throw new ApiError(error.details[0].message, 400);
-            }
-
-            req.body = value;
-
-            next();
-        } catch (e) {
-            next(e);
-        }
-    },
-
-    isPasswordValid: (req, res, next) => {
-        try {
-            const {error, value} = passwordValidator.validate(req.body);
+            const {error, value} = validator.validate(req.body);
 
             if (error) {
                 throw new ApiError(error.details[0].message, 400);
@@ -72,8 +55,6 @@ module.exports = {
 
     checkExistUserByEmail: async (req, res, next) => {
         try {
-            mailValidator.validate(req.body);
-
             const {email} = req.body;
 
             const user = await UserSchema.findOne({email});
