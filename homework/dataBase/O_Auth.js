@@ -20,7 +20,11 @@ const oAuthSchema = new Schema({
         trim: true,
         required: true,
         ref: 'user'
-    }
-});
+    },
+},
+{
+    timestamps: true
+})
+;
 
 module.exports = model(modelNameEnum.O_AUTH, oAuthSchema);

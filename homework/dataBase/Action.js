@@ -21,6 +21,8 @@ const ActionSchema = new Schema({
         trim: true,
         required: true
     }
+}, {
+    timestamps: true
 });
 
 module.exports = model(modelNameEnum.ACTION, ActionSchema);

@@ -1,6 +1,6 @@
 const {model, Schema} = require('mongoose');
 
-const {userRole: {ADMIN, MANAGER, USER},modelNameEnum} = require('../constans');
+const {userRole: {ADMIN, MANAGER, USER}, modelNameEnum} = require('../constans');
 
 const UserSchema = new Schema({
     name: {
@@ -37,8 +37,10 @@ const UserSchema = new Schema({
     is_active: {
         type: Boolean,
         default: false,
-        required:true
+        required: true
     }
+}, {
+    timestamps: true
 });
 
 module.exports = model(modelNameEnum.USER, UserSchema);
