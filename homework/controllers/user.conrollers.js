@@ -1,3 +1,4 @@
+const {getAllUsers} = require("../services/user.service");
 const {OAuthSchema, UserSchema, ActionSchema} = require('../dataBase');
 const {emailTemplatesEnum} = require('../constans');
 const {messagesEnum, statusEnum} = require('../errors');
@@ -7,7 +8,7 @@ const {actionTokenEnum: {ACTIVATE_USER}} = require('../constans');
 module.exports = {
     getUsers: async (req, res) => {
         try {
-            const users = await UserSchema.find({})
+            const users = await getAllUsers(req.query)
                 .lean()
                 .select('-password');
 

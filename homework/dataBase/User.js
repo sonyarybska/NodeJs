@@ -22,6 +22,10 @@ const UserSchema = new Schema({
         required: true
     },
 
+    age: {
+        type: Number,
+    },
+
     role: {
         type: String,
         trim: true,
