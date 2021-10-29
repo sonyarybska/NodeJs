@@ -1,8 +1,7 @@
-const {getAllUsers} = require("../services/user.service");
 const {OAuthSchema, UserSchema, ActionSchema} = require('../dataBase');
 const {emailTemplatesEnum} = require('../constans');
 const {messagesEnum, statusEnum} = require('../errors');
-const {emailService, passwordService, authService} = require('../services');
+const {emailService, passwordService, authService, s3Service,userService:{getAllUsers}} = require('../services');
 const {actionTokenEnum: {ACTIVATE_USER}} = require('../constans');
 
 module.exports = {
@@ -33,15 +32,23 @@ module.exports = {
 
             const hashPas = await passwordService.hash(req.body.password);
 
-            const user = await UserSchema.create({...req.body, password: hashPas});
+            let user = await UserSchema.create({...req.body, password: hashPas});
+
+            const avatar = req.files;
 
             const actionToken = authService.createActionToken();
 
             await ActionSchema.create({action_token: actionToken, type: ACTIVATE_USER, user_id: user._id});
 
+            if (avatar) {
+                const info = await s3Service.uploadImage(avatar, 'users', user._id.toString());
+
+                user = await UserSchema.findByIdAndUpdate({_id: user._id}, {avatar: info.Location},{new:true});
+            }
+
             await emailService(user.email, emailTemplatesEnum.WELCOME, {userName: user.name, token: actionToken});
 
-            res.status(statusEnum.CREATED).json({user,actionToken});
+            res.status(statusEnum.CREATED).json({user, actionToken});
         } catch (e) {
             res.json(e.message);
         }

@@ -1,24 +1,26 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const {ApiError:{ApiError}} = require('./errors');
+const {ApiError: {ApiError}} = require('./errors');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
-const swaggerUI=require('swagger-ui-express');
+const swaggerUI = require('swagger-ui-express');
+const fileUpload = require('express-fileupload');
 require('dotenv').config();
 
 
 const {MONGO_URL, PORT, ALLOWED_ORIGIN, NODE_ENV} = require('./configs/config');
-const startCron=require('./cron');
+const startCron = require('./cron');
 const {authRouter, userRouter} = require('./routers');
 const {statusEnum: {GENERIC_ERROR}} = require('./errors');
 const {defaultDataHelper} = require('./helpers');
-const swaggerJson=require('./docs/swagger.json');
+const swaggerJson = require('./docs/swagger.json');
 
 mongoose.connect(MONGO_URL);
 
 const app = express();
 
+app.use(fileUpload({}));
 app.use(helmet());
 app.use(cors({origin: _configureCors}));
 app.use(rateLimit({
@@ -35,7 +37,7 @@ if (NODE_ENV === 'dev') {
 app.use(express.json());
 app.use(express.urlencoded());
 
-app.use('/docs',swaggerUI.serve, swaggerUI.setup(swaggerJson));
+app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerJson));
 app.use('/users', userRouter);
 app.use('/auth', authRouter);
 

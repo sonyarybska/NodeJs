@@ -10,5 +10,7 @@ module.exports = {
     INVALID_TOKEN:'Invalid token',
     BAD_REQUEST: 'Bad request',
     WRONG_TEMPLATE_NAME:'Wrong template name',
-    PASSWORD_CHANGED: 'Password changed'
+    PASSWORD_CHANGED: 'Password changed',
+    NOT_SUPPORTED_FORMAT:'Not supported format',
+    FILE_IS_TOO_BIG:(name)=>`File ${name} is too big`
 };

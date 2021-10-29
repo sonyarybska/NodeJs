@@ -6,5 +6,6 @@ module.exports = {
     headerEnum: require('./header-enum'),
     emailTemplatesEnum: require('./email-templates-enum'),
     actionTokenEnum:require('./action-token-type'),
-    modelNameEnum:require('./model-name-enum')
+    modelNameEnum:require('./model-name-enum'),
+    avsS3:require('./aws-s3')
 };
