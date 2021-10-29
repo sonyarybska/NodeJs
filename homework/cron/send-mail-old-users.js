@@ -2,7 +2,6 @@ const dayJs = require('dayjs');
 const utc = require('dayjs/plugin/utc');
 const {emailTemplatesEnum} = require('../constans');
 
-
 const {OAuthSchema} = require('../dataBase');
 const {emailService} = require('../services');
 
