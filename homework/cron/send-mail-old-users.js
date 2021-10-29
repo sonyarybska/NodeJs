@@ -14,9 +14,7 @@ module.exports = async () => {
 
     if (user.length) {
 
-        const send = user.map(value => {
-            return emailService(value.user_id.email, emailTemplatesEnum.REMIND, {userName: value.user_id.name});
-        });
+        const send = user.map(value => emailService(value.user_id.email, emailTemplatesEnum.REMIND, {userName: value.user_id.name}));
 
         Promise.allSettled(send).then(result => console.log(result));
 
