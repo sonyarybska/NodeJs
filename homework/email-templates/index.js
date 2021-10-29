@@ -16,6 +16,10 @@ module.exports = {
     updateUser: {
         templateName: 'update-user',
         subject: 'Your account has been updated !'
-    }
+    },
 
+    remindUser: {
+        templateName: 'remind',
+        subject: 'Remind !'
+    }
 };

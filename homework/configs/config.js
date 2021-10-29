@@ -1,7 +1,7 @@
 module.exports = {
-    NODE_ENV:process.env.NODE_ENV || 'prod',
+    NODE_ENV: process.env.NODE_ENV || 'prod',
 
-    ADMIN_PASSWORD:'sofa123%',
+    ADMIN_PASSWORD: 'sofa123%',
 
     MONGO_URL: process.env.MONGO_URL || 'mongodb://localhost:27017/lesson3',
     PORT: process.env.PORT || '5000',
@@ -15,8 +15,8 @@ module.exports = {
 
     ALLOWED_ORIGIN: 'http://localhost:3000;http//localhost:4200' || 'http://localhost:3000',
 
-    AWS_S3_REGION:process.env.AWS_S3_REGION,
-    AWS_S3_NAME:process.env.AWS_S3_NAME,
-    AWS_S3_ACCESS_KEY:process.env.AWS_S3_ACCESS_KEY,
-    AWS_S3_SECRET_KEY:process.env.AWS_S3_SECRET_KEY
+    AWS_S3_REGION: process.env.AWS_S3_REGION,
+    AWS_S3_NAME: process.env.AWS_S3_NAME,
+    AWS_S3_ACCESS_KEY: process.env.AWS_S3_ACCESS_KEY,
+    AWS_S3_SECRET_KEY: process.env.AWS_S3_SECRET_KEY
 };
