@@ -13,11 +13,9 @@ module.exports = async () => {
     const user = await OAuthSchema.find({createdAt: {$lt: tenDays}}).populate('user_id');
 
     if (user.length) {
-
         // eslint-disable-next-line max-len
         const send = user.map(value => emailService(value.user_id.email, emailTemplatesEnum.REMIND, {userName: value.user_id.name}));
 
-        Promise.allSettled(send).then(result => console.log(result));
-
+        await Promise.allSettled(send);
     }
 };
